@@ -19,14 +19,27 @@ export class DashboardComponent implements OnInit {
   constructor(public _dashboardService: DashboardProviderService) { }
 
   ngOnInit(): void {
-    this.getSpaceData('','','');
+    this.getSpaceData();
   }
 
-  getSpaceData(launch_bool_val, land_bool_val, launch_year) {
-    console.log(launch_year + " " + launch_bool_val + " " + land_bool_val);
-    this.launch_year = launch_year;
-    this.launch_bool_val = launch_bool_val;
-    this.land_bool_val = land_bool_val;
+  selectedYear(year){
+    this.launch_year = year;
+    this.land_bool_val = '';
+    this.launch_bool_val = '';
+    this.getSpaceData();
+  }
+
+  selectedValueforLaunch(value){
+    this.launch_bool_val = value;
+    this.getSpaceData();
+  }
+
+  selectedValueForLanding(value){
+    this.land_bool_val = value;
+    this.getSpaceData();
+  }
+
+  getSpaceData() {
     this.loader = true;
     this._dashboardService.getData(this.launch_bool_val, this.land_bool_val, this.launch_year).subscribe(
       data => {
